@@ -31,4 +31,7 @@ bool compare(const Core& x, const Core& y)
     return x.name() < y.name();
 }
 
-
+bool compare_Core_ptrs(const Core* x, const Core* y)
+{
+    return compare(*x, *y);
+}
