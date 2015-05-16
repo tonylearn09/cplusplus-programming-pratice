@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <cctype>
 
 #include "Core.h"
 #include "Student_info.h"
@@ -12,15 +13,26 @@ istream& Student_info::read(istream& is)
     // won't bother to delete unexisting object
     delete cp;
 
-
-    char  ch;
+    char ch;
     is >> ch;
 
+    /*
+    while (isspace(ch))
+        is >> ch;
+    cout << ch << endl;
+    */
+    
     // use Core or Grade constuct funtion to read the input and construct
     if (ch == 'U')
         cp = new Core(is);
-    else
+    else if (ch == 'G')
         cp = new Grad(is);
+    else if (ch == 'P')
+        cp = new PassAndFail(is);
+    else if (ch == 'A')
+        cp = new Audit(is);
+    else
+        throw runtime_error("no this kind of options for the object.");
 
     return is;
 }

@@ -26,6 +26,20 @@ public:
     // virtual destructer
     virtual ~Core() { }
 
+    // virtual function to check if object hold values for student record
+    // or not
+    // in exercise 13-3
+    virtual bool valid() const { return !homework.empty(); }
+
+    // virtual function to check if it did all the homework
+    // in exercise 13-5
+    virtual bool finish_check() const
+    {
+        return (std::find(homework.begin(), homework.end(), 0.0)
+                == homework.end());
+    }
+    
+
 protected:
     // accessible by derived class
     double midterm, final;
@@ -60,6 +74,12 @@ public:
     // no need to declare virtual destructer
     // since it was inherited
 
+
+    // virtual function to check if it do the thesis
+    // inherit from finish_check
+    // exercise 13-5
+    bool finish_check() const { return thesis > 0.0; }
+
 protected:
     // virtual clone function
     // put it in protected
@@ -71,9 +91,57 @@ private:
 
 };
 
+class PassAndFail: public Core {
+public:
+    PassAndFail() { }
+
+    // use Core's read function
+    // because it didn't have thesis
+    PassAndFail(std::istream& is) { Core::read(is); }
+
+    double grade() const 
+    {
+        if (homework.size() > 0)
+            return ::grade(midterm, final, homework);
+        else 
+            return (midterm + final) / 2;
+    }
+
+    // they don't need to do any homework
+    bool valid() const { return true; }
+    bool finish_check() const { return true; } 
+
+    // don't need to write virtual destructer
+    // it is inherited
+private:
+    PassAndFail* clone() const { return new PassAndFail(*this); }
+};
+
+
+class Audit: public Core {
+public:
+    Audit() { }
+    // use its own read function
+    Audit(std::istream& is) { read(is); }
+
+    std::istream& read(std::istream&);
+    double grade() const { return 0.0; }
+
+    // assume they all did their homework
+    // since they are audit, so we don't care
+    bool valid() const { return true; }
+    bool finish_check() const { return true; }
+private:
+    Audit* clone() const { return new Audit(*this); }
+};
 
 // not class memeber function
 bool compare(const Core&, const Core&);
 bool compare_Core_ptrs(const Core*, const Core*);
+
+// map numeric grade to a letter grade
+// exercise 13-4.cpp
+std::string map_to_letter(double);
+
 
 #endif
