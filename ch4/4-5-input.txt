@@ -1,0 +1,2 @@
+I love C++
+C++ love you
