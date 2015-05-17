@@ -16,12 +16,6 @@ istream& Student_info::read(istream& is)
     char ch;
     is >> ch;
 
-    /*
-    while (isspace(ch))
-        is >> ch;
-    cout << ch << endl;
-    */
-    
     // use Core or Grade constuct funtion to read the input and construct
     if (ch == 'U')
         cp = new Core(is);
@@ -31,9 +25,17 @@ istream& Student_info::read(istream& is)
         cp = new PassAndFail(is);
     else if (ch == 'A')
         cp = new Audit(is);
-    else
-        throw runtime_error("no this kind of options for the object.");
-
+    else {
+        // need to create a pointer, or otherwise when we call the destructer
+        // it will have cored dump
+        // since there is no pointer 
+        // besides, every line in linux end with '\n'
+        // and the last line in the file end with '\n''EOF'
+        // so it will call this else when it read the 'EOF'
+        // since it is not 'U' or 'G' ...
+        cp = 0;
+        /* throw runtime_error("read invalid student type"); */
+    }
     return is;
 }
 

@@ -80,13 +80,12 @@ public:
     // exercise 13-5
     bool finish_check() const { return thesis > 0.0; }
 
-protected:
+private:
     // virtual clone function
-    // put it in protected
+    // put it in private
     // the return type is not the same as base class
     Grad* clone() const { return new Grad(*this); }
 
-private:
     double thesis;
 
 };
