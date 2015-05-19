@@ -1,0 +1,3 @@
+I like Accelerated c++ very much
+I hope to learn c++ well
+I think object-oriented programming is Great
