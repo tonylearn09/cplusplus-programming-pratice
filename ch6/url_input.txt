@@ -1,0 +1,4 @@
+http://google.com http://facebook.com
+h://github.com apple.com
+stanford.edu http://mit.edu
+harvard.edu  http://cmu.edu
